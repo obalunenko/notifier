@@ -1,3 +1,9 @@
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/obalunenko/notifier)
+[![GoDoc](https://godoc.org/github.com/obalunenko/notifier?status.svg)](https://godoc.org/github.com/obalunenko/notifier)
+[![Latest release artifacts](https://img.shields.io/github/v/release/obalunenko/notifier)](https://github.com/obalunenko/notifier/releases/latest)
+[![Go Report Card](https://goreportcard.com/badge/github.com/obalunenko/notifier)](https://goreportcard.com/report/github.com/obalunenko/notifier)
+[![Go [lint, test]](https://github.com/obalunenko/notifier/actions/workflows/go.yml/badge.svg)](https://github.com/obalunenko/notifier/actions/workflows/go.yml)
+[![CodeQL](https://github.com/obalunenko/notifier/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/obalunenko/notifier/actions/workflows/codeql-analysis.yml)
 ![coverbadger-tag-do-not-edit](https://img.shields.io/badge/coverage-65.42%25-brightgreen?longCache=true&style=flat)
 
 # notifier
