@@ -7,9 +7,11 @@ type Severity int
 
 const (
 	severityUnknown Severity = iota
-
+	// SeverityInfo represents an info alert.
 	SeverityInfo
+	// SeverityWarning represents a warning alert.
 	SeverityWarning
+	// SeverityCritical represents a critical alert.
 	SeverityCritical
 
 	severitySentinel
