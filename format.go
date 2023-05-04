@@ -43,6 +43,8 @@ func severityEmoji(severity Severity) string {
 		return emojiWarning
 	case SeverityCritical:
 		return emojiCritical
+	case severityUnknown, severitySentinel:
+		fallthrough
 	default:
 		return ""
 	}

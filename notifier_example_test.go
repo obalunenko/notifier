@@ -36,7 +36,9 @@ func ExampleNotifier() {
 
 	// Create a new telegram notifier if token and chatID env set.
 	if token, chatID := os.Getenv(testTGTokenEnv), os.Getenv(testTGChatIDEnv); token != "" && chatID != "" {
-		tgn, err := notifier.NewTelegram(token, chatID)
+		var tgn notifier.Notifier
+
+		tgn, err = notifier.NewTelegram(token, chatID)
 		if err != nil {
 			// Handle error in your way.
 			panic(err)

@@ -41,6 +41,8 @@ func (s Severity) String() string {
 		return "WARNING"
 	case SeverityCritical:
 		return "CRITICAL"
+	case severityUnknown, severitySentinel:
+		fallthrough
 	default:
 		return fmt.Sprintf("UNKNOWN(%d)", s)
 	}

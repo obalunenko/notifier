@@ -84,7 +84,8 @@ func TestMultiNotifier_Alert(t *testing.T) {
 			wantMessage: "", // No message should be sent.
 			wantErr: func(t require.TestingT, err error, i ...interface{}) {
 				require.EqualError(t, err,
-					"send alert to 'multi[iowriter: one;iowriter: two]': format alert: 'UNKNOWN(100)', should be one of '[INFO WARNING CRITICAL]': invalid severity")
+					"send alert to 'multi[iowriter: one;iowriter: two]': format alert: 'UNKNOWN(100)', "+
+						"should be one of '[INFO WARNING CRITICAL]': invalid severity")
 			},
 		},
 	}
