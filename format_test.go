@@ -24,10 +24,6 @@ func Test_formatAlert(t *testing.T) {
 	ctx := context.Background()
 
 	setCtx := func(ctx context.Context, metadata *Metadata) context.Context {
-		if ctx == nil {
-			return ctx
-		}
-
 		if metadata != nil {
 			ctx = ContextWithMetadata(ctx, *metadata)
 		}
@@ -39,6 +35,7 @@ func Test_formatAlert(t *testing.T) {
 		message  string
 		severity Severity
 	}
+
 	tests := []struct {
 		name     string
 		metadata *Metadata
@@ -134,9 +131,9 @@ func Test_formatAlert(t *testing.T) {
 			ctx: nil,
 			args: args{
 				message:  "test message",
-				severity: SeverityInfo,
+				severity: SeverityCritical,
 			},
-			wantPath: filepath.Join("testdata", "Test_formatAlert_without_metadata.golden"),
+			wantPath: filepath.Join("testdata", "Test_formatAlert_with_metadata.golden"),
 			wantErr:  require.NoError,
 		},
 	}

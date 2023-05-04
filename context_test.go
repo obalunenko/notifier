@@ -14,6 +14,7 @@ func TestMetadata_toMap(t *testing.T) {
 		Commit       string
 		BuildDate    string
 	}
+
 	tests := []struct {
 		name    string
 		fields  fields

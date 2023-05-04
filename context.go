@@ -16,7 +16,9 @@ type Metadata struct {
 }
 
 func (m Metadata) toMap() map[string]string {
-	metadataMap := make(map[string]string, 4)
+	const defaultMapSize = 5
+
+	metadataMap := make(map[string]string, defaultMapSize)
 
 	if m.AppName != "" {
 		metadataMap["app_name"] = m.AppName
@@ -63,5 +65,6 @@ func MetadataFromContext(ctx context.Context) (*Metadata, bool) {
 	if !ok || metadata == nil {
 		return nil, false
 	}
+
 	return metadata, true
 }
