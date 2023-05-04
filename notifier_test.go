@@ -8,8 +8,9 @@ import (
 	"time"
 
 	"github.com/obalunenko/getenv"
-	"github.com/obalunenko/notifier"
 	"github.com/stretchr/testify/require"
+
+	"github.com/obalunenko/notifier"
 )
 
 func newTestNotifier(t testing.TB, w io.Writer, name string) notifier.Notifier {
