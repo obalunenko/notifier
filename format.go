@@ -28,26 +28,21 @@ var (
 	)
 )
 
+const (
+	emojiInfo     = "ℹ️"
+	emojiWarning  = "⚠️"
+	emojiCritical = "🚨"
+)
+
+var severityToEmoji = map[Severity]string{
+	SeverityInfo:     emojiInfo,
+	SeverityWarning:  emojiWarning,
+	SeverityCritical: emojiCritical,
+}
+
 // severityEmoji returns the emoji for the given severity.
 func severityEmoji(severity Severity) string {
-	const (
-		emojiInfo     = "ℹ️"
-		emojiWarning  = "⚠️"
-		emojiCritical = "🚨"
-	)
-
-	switch severity {
-	case SeverityInfo:
-		return emojiInfo
-	case SeverityWarning:
-		return emojiWarning
-	case SeverityCritical:
-		return emojiCritical
-	case severityUnknown, severitySentinel:
-		fallthrough
-	default:
-		return ""
-	}
+	return severityToEmoji[severity]
 }
 
 // formatAlert formats the alert message using the Golang template.
