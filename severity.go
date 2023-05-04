@@ -1,6 +1,6 @@
 package notifier
 
-import "fmt"
+//go:generate stringer -type Severity -output severity_string.go -trimprefix Severity -linecomment
 
 // Severity represents the severity of an alert.
 type Severity int
@@ -8,11 +8,11 @@ type Severity int
 const (
 	severityUnknown Severity = iota
 	// SeverityInfo represents an info alert.
-	SeverityInfo
+	SeverityInfo // INFO
 	// SeverityWarning represents a warning alert.
-	SeverityWarning
+	SeverityWarning // WARNING
 	// SeverityCritical represents a critical alert.
-	SeverityCritical
+	SeverityCritical // CRITICAL
 
 	severitySentinel
 )
@@ -31,19 +31,3 @@ var allowedSeverities = func() []string {
 
 	return allowed
 }()
-
-// String returns the string representation of the severity.
-func (s Severity) String() string {
-	switch s {
-	case SeverityInfo:
-		return "INFO"
-	case SeverityWarning:
-		return "WARNING"
-	case SeverityCritical:
-		return "CRITICAL"
-	case severityUnknown, severitySentinel:
-		fallthrough
-	default:
-		return fmt.Sprintf("UNKNOWN(%d)", s)
-	}
-}
