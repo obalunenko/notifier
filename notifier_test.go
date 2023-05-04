@@ -27,7 +27,7 @@ func TestMultiNotifier_Alert(t *testing.T) {
 	ctx = notifier.ContextWithMetadata(ctx, notifier.Metadata{
 		AppName:      "test_app",
 		InstanceName: "test_instance",
-		Commit:       "ecba30bacf4bf0c7bed07661ce6f320a5352059f",
+		Commit:       "test_commit",
 		BuildDate:    time.Now().Format(time.DateTime),
 	})
 
