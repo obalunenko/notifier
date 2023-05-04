@@ -1,0 +1,6 @@
+<b>⚠️ Severity:</b> WARNING
+<b>Alert Message:</b> test message
+<b>Meta:</b>
+	• build_date: 2020-01-01 00:00:00
+	• commit: test_commit
+	• instance_name: test_instance

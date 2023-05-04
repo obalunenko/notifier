@@ -1,0 +1,10 @@
+<b>{{severityEmoji .Severity}} Severity:</b> {{.Severity.String}}
+<b>Alert Message:</b> {{.Message}}
+{{- if len .Metadata -}}
+    {{- "\n"}}<b>Meta:</b>
+    {{- range $key, $value := .Metadata -}}
+        {{- if $value }}
+            {{- "\n\t"}}• {{ $key }}: {{ $value }}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
