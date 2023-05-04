@@ -1,0 +1,7 @@
+<b>🚨 Severity:</b> CRITICAL
+<b>Alert Message:</b> test message
+<b>Meta:</b>
+	• app_name: test_app
+	• build_date: 2020-01-01 00:00:00
+	• commit: test_commit
+	• instance_name: test_instance

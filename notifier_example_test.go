@@ -1,17 +1,4 @@
-![coverbadger-tag-do-not-edit](https://img.shields.io/badge/coverage-65.42%25-brightgreen?longCache=true&style=flat)
-
-# notifier
-
-Package notifier provides functionality to send notifications.
-
-## Examples
-
-### Notifier
-
-ExampleNotifier shows how to create a new notifier with a list of notifiers and send a message.
-
-```golang
-package main
+package notifier_test
 
 import (
 	"bytes"
@@ -30,7 +17,7 @@ const (
 )
 
 // ExampleNotifier shows how to create a new notifier with a list of notifiers and send a message.
-func main() {
+func ExampleNotifier() {
 	ctx := context.Background()
 
 	var buf bytes.Buffer
@@ -49,7 +36,9 @@ func main() {
 
 	// Create a new telegram notifier if token and chatID env set.
 	if token, chatID := os.Getenv(testTGTokenEnv), os.Getenv(testTGChatIDEnv); token != "" && chatID != "" {
-		tgn, err := notifier.NewTelegram(token, chatID)
+		var tgn notifier.Notifier
+
+		tgn, err = notifier.NewTelegram(token, chatID)
 		if err != nil {
 			// Handle error in your way.
 			panic(err)
@@ -81,6 +70,12 @@ func main() {
 	}
 
 	fmt.Println(buf.String())
+	// Output:
+	// <b>⚠️ Severity:</b> WARNING
+	// <b>Alert Message:</b> [NOTIFIER_TEST]: example message
+	// <b>Meta:</b>
+	//	• app_name: test_app
+	//	• build_date: 2020-01-01 00:00:00
+	//	• commit: test_commit
+	//	• instance_name: test_instance
 }
-
-```
