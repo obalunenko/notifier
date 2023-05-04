@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/require"
-
+	"github.com/obalunenko/getenv"
 	"github.com/obalunenko/notifier"
+	"github.com/stretchr/testify/require"
 )
 
 func newTestNotifier(t testing.TB, w io.Writer, name string) notifier.Notifier {
@@ -104,6 +104,66 @@ func TestMultiNotifier_Alert(t *testing.T) {
 				require.Contains(t, bufOne.String(), tc.wantMessage, "first notifier")
 				require.Contains(t, bufTwo.String(), tc.wantMessage, "second notifier")
 			}
+		})
+	}
+}
+
+func getEnv(tb testing.TB, key string) string {
+	tb.Helper()
+
+	v := getenv.EnvOrDefault(key, "")
+	if v == "" {
+		tb.Skipf("skip test because %s is empty", key)
+	}
+
+	return v
+}
+
+// TestNewTelegram tests NewTelegram function.
+func TestNewTelegram(t *testing.T) {
+	type args struct {
+		token  string
+		chatID string
+	}
+
+	type testcase struct {
+		name    string
+		args    args
+		wantErr require.ErrorAssertionFunc
+	}
+
+	testcases := []testcase{
+		{
+			name: "valid parameters",
+			args: args{
+				token:  getEnv(t, testTGTokenEnv),
+				chatID: getEnv(t, testTGChatIDEnv),
+			},
+			wantErr: require.NoError,
+		},
+		{
+			name: "empty token",
+			args: args{
+				token:  "",
+				chatID: getEnv(t, testTGChatIDEnv),
+			},
+			wantErr: require.Error,
+		},
+		{
+			name: "empty chat id",
+			args: args{
+				token:  getEnv(t, testTGTokenEnv),
+				chatID: "",
+			},
+			wantErr: require.Error,
+		},
+	}
+
+	for _, tc := range testcases {
+		t.Run(tc.name, func(t *testing.T) {
+			_, err := notifier.NewTelegram(tc.args.token, tc.args.chatID)
+
+			tc.wantErr(t, err)
 		})
 	}
 }
