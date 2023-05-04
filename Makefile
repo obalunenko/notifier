@@ -117,6 +117,15 @@ check-releaser:
 new-version: vet test-regression
 	./scripts/release/new-version.sh
 
+## recreate all generated code and documentation.
+codegen:
+	$(COMPOSE_TOOLS_CMD_UP) go-generate go-generate
+.PHONY: codegen
+
+## recreate all generated code and swagger documentation and format code.
+generate: codegen format-project vet
+.PHONY: generate
+
 
 .DEFAULT_GOAL := help
 
