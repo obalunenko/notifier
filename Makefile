@@ -7,6 +7,8 @@ VERSION ?= $(shell git describe --tags $(git rev-list --tags --max-count=1))
 APP_NAME?=notifier
 SHELL := env APP_NAME=$(APP_NAME) $(SHELL)
 
+GOVERSION:=1.22
+
 GOTOOLS_IMAGE_TAG?=v0.10.0
 SHELL := env GOTOOLS_IMAGE_TAG=$(GOTOOLS_IMAGE_TAG) $(SHELL)
 
@@ -125,6 +127,11 @@ codegen:
 ## recreate all generated code and swagger documentation and format code.
 generate: codegen format-project vet
 .PHONY: generate
+
+bump-go-version:
+	./scripts/bump-go.sh $(GOVERSION)
+.PHONY: bump-go-version
+
 
 
 .DEFAULT_GOAL := help
