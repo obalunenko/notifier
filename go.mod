@@ -1,10 +1,11 @@
 module github.com/obalunenko/notifier
 
 go 1.22
+toolchain go1.23.4
 
 require (
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
-	github.com/obalunenko/getenv v1.13.0
+	github.com/obalunenko/getenv v1.14.0
 	github.com/stretchr/testify v1.10.0
 )
 
