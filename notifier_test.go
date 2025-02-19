@@ -73,7 +73,8 @@ func TestMultiNotifier_Alert(t *testing.T) {
 			wantMessage: "",
 			wantErr: func(t require.TestingT, err error, i ...interface{}) {
 				require.EqualError(t, err,
-					"send alert to 'multi[iowriter: one;iowriter: two]': format alert: message is empty")
+					"send alert to 'multi[iowriter: one;iowriter: two]': format alert: message is empty",
+					i)
 			},
 		},
 		{
@@ -86,7 +87,7 @@ func TestMultiNotifier_Alert(t *testing.T) {
 			wantErr: func(t require.TestingT, err error, i ...interface{}) {
 				require.EqualError(t, err,
 					"send alert to 'multi[iowriter: one;iowriter: two]': format alert: 'Severity(100)', "+
-						"should be one of '[INFO WARNING CRITICAL]': invalid severity")
+						"should be one of '[INFO WARNING CRITICAL]': invalid severity", i)
 			},
 		},
 	}
