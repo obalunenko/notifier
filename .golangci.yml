@@ -1,12 +1,4 @@
 linters-settings:
-  depguard:
-    list-type: blacklist
-    packages:
-      # logging is allowed only by logutils.Log, logrus
-      # is allowed to use only in logutils package
-      - github.com/sirupsen/logrus
-    packages-with-error-message:
-      - github.com/sirupsen/logrus: "logging is allowed only by github.com/obalunenko/logger"
   dupl:
     threshold: 100
   funlen:
@@ -56,11 +48,10 @@ linters:
   disable-all: true
   enable:
     - bodyclose
-    - depguard
     - dogsled
     - dupl
     - errcheck
-    - exportloopref
+    - copyloopvar
     - exhaustive
     - funlen
     - gochecknoinits
@@ -106,6 +97,12 @@ linters:
   # - testpackage
 
 issues:
+  # make issues output unique by line, default is true
+  uniq-by-line: true
+  exclude-dirs:
+    - vendor/
+  exclude-files:
+    - \.pb\.go$
   exclude-use-default: false
   exclude:
     # for "public interface + private struct implementation" cases only!
@@ -178,25 +175,22 @@ issues:
 run:
   issues-exit-code: 0
   tests: true
-  skip-dirs:
-    - vendor/
-  skip-files:
-    - \.pb\.go$
 
 # output configuration options
 output:
   # colored-line-number|line-number|json|tab|checkstyle|code-climate|junit-xml|github-actions
   # default is "colored-line-number"
-  format: checkstyle
+  formats:
+    - format: colored-line-number
+      path: stderr
+    - format: checkstyle
+      path: linters-report.xml
 
   # print lines of code with issue, default is true
   print-issued-lines: true
 
   # print linter name in the end of issue text, default is true
   print-linter-name: true
-
-  # make issues output unique by line, default is true
-  uniq-by-line: true
 
   # add a prefix to the output file references; default is no prefix
   path-prefix: ""

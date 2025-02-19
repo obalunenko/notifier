@@ -116,8 +116,8 @@ func Test_formatAlert(t *testing.T) {
 			},
 			wantPath: filepath.Join("testdata", "Test_formatAlert_message_is_empty.golden"),
 			wantErr: func(t require.TestingT, err error, i ...interface{}) {
-				require.Error(t, err)
-				require.EqualError(t, err, ErrEmptyMessage.Error())
+				require.Error(t, err, i)
+				require.EqualError(t, err, ErrEmptyMessage.Error(), i)
 			},
 		},
 		{
