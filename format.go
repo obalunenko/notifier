@@ -5,9 +5,8 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
+	"strings"
 	"text/template"
-
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 // alertData holds the alert information that will be sent in the Telegram message.
@@ -27,6 +26,9 @@ var (
 			Parse(alertFormat),
 	)
 )
+
+// htmlEscaper escapes characters reserved by the Telegram HTML parse mode.
+var htmlEscaper = strings.NewReplacer("<", "&lt;", ">", "&gt;", "&", "&amp;")
 
 const (
 	emojiInfo     = "ℹ️"
@@ -58,7 +60,7 @@ func formatAlert(ctx context.Context, severity Severity, message string) (string
 	var buf bytes.Buffer
 
 	ad := alertData{
-		Message:  tgbotapi.EscapeText(tgbotapi.ModeHTML, message),
+		Message:  htmlEscaper.Replace(message),
 		Severity: severity,
 		Metadata: nil,
 	}

@@ -169,3 +169,9 @@ func TestNewTelegram(t *testing.T) {
 		})
 	}
 }
+
+// TestNewTelegram_invalidToken tests that malformed tokens are rejected without calling Telegram API.
+func TestNewTelegram_invalidToken(t *testing.T) {
+	_, err := notifier.NewTelegram("invalid-token", "123")
+	require.ErrorIs(t, err, notifier.ErrInvalidToken)
+}

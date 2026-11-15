@@ -6,10 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"strconv"
 	"strings"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/mymmrac/telego"
+	ta "github.com/mymmrac/telego/telegoapi"
 )
 
 // Notifier declares notifier contract.
@@ -21,15 +23,24 @@ type Notifier interface {
 }
 
 func isInvalidToken(err error) bool {
-	return strings.Contains(err.Error(), "Not Found")
+	if errors.Is(err, telego.ErrInvalidToken) {
+		return true
+	}
+
+	var apiErr *ta.Error
+	if errors.As(err, &apiErr) {
+		return apiErr.ErrorCode == http.StatusUnauthorized || apiErr.ErrorCode == http.StatusNotFound
+	}
+
+	return false
 }
 
 // telegramNotifier sends messages to a telegram chat.
 type telegramNotifier struct {
 	// Telegram chat id.
-	chatID int64
+	chatID telego.ChatID
 	// Telegram client.
-	client *tgbotapi.BotAPI
+	client *telego.Bot
 }
 
 // NewTelegram returns a new telegram notifier.
@@ -42,7 +53,11 @@ func NewTelegram(token, chatID string) (Notifier, error) {
 		return nil, ErrEmptyTelegramChatID
 	}
 
-	client, err := tgbotapi.NewBotAPI(token)
+	// Health check calls getMe to validate the token and caches the bot username for Kind.
+	client, err := telego.NewBot(token,
+		telego.WithDiscardLogger(),
+		telego.WithHealthCheck(context.Background()),
+	)
 	if err != nil {
 		if isInvalidToken(err) {
 			err = ErrInvalidToken
@@ -57,7 +72,7 @@ func NewTelegram(token, chatID string) (Notifier, error) {
 	}
 
 	return &telegramNotifier{
-		chatID: id,
+		chatID: telego.ChatID{ID: id},
 		client: client,
 	}, nil
 }
@@ -66,7 +81,7 @@ func NewTelegram(token, chatID string) (Notifier, error) {
 func (t *telegramNotifier) Kind() string {
 	kind := "telegram"
 
-	uname := t.client.Self.UserName
+	uname := t.client.Username()
 	if uname == "" {
 		return kind
 	}
@@ -81,12 +96,15 @@ func (t *telegramNotifier) Alert(ctx context.Context, severity Severity, message
 		return fmt.Errorf("format alert: %w", err)
 	}
 
-	msg := tgbotapi.NewMessage(t.chatID, alert)
-	// Telegram messages should be sent in HTML format.
-	// https://confluence.softswiss.com/display/ADT/Alerting+notes
-	msg.ParseMode = tgbotapi.ModeHTML
+	msg := &telego.SendMessageParams{
+		ChatID: t.chatID,
+		Text:   alert,
+		// Telegram messages should be sent in HTML format.
+		// https://confluence.softswiss.com/display/ADT/Alerting+notes
+		ParseMode: telego.ModeHTML,
+	}
 
-	_, err = t.client.Send(msg)
+	_, err = t.client.SendMessage(ctx, msg)
 	if err != nil {
 		return fmt.Errorf("send telegram message failed: %w", err)
 	}
