@@ -1,0 +1,125 @@
+version: "2"
+linters:
+  default: all
+  disable:
+    - copyloopvar
+    - cyclop
+    - depguard
+    - dupl
+    - err113
+    - errname
+    - errorlint
+    - exhaustive
+    - exhaustruct
+    - exhaustruct_v5
+    - forbidigo
+    - funcorder
+    - funlen
+    - gochecknoglobals
+    - gocognit
+    - goconst
+    - gocyclo
+    - godox
+    - gomodguard
+    - gosmopolitan
+    - inamedparam
+    - intrange
+    - ireturn
+    - maintidx
+    - mnd
+    - nakedret
+    - nestif
+    - nlreturn
+    - noctx
+    - noinlineerr
+    - nonamedreturns
+    - paralleltest
+    - testableexamples
+    - testpackage
+    - thelper
+    - tparallel
+    - unparam
+    - usestdlibvars
+    - varnamelen
+    - wrapcheck
+    - wsl
+    - wsl_v5
+  settings:
+    gocritic:
+      disabled-checks:
+        - importShadow
+        - sloppyReassign
+        - unnamedResult
+        - whyNoLint
+      enabled-tags:
+        - diagnostic
+        - experimental
+        - opinionated
+        - performance
+        - style
+    gosec:
+      # Preserve the exclusions from the former standalone security workflow.
+      excludes:
+        - G103
+        - G104
+        - G304
+        - G402
+    govet:
+      disable:
+        - fieldalignment
+        - shadow
+      enable-all: true
+    lll:
+      line-length: 130
+    revive:
+      rules:
+        - name: indent-error-flow
+        - name: use-any
+    staticcheck:
+      checks:
+        - -ST1000
+        - all
+  exclusions:
+    generated: lax
+    presets:
+      - std-error-handling
+    rules:
+      # Preserve the non-security legacy exclusions without hiding gosec findings.
+      - linters:
+          - govet
+        text: '(possible misuse of unsafe.Pointer|should have signature)'
+      - linters:
+          - staticcheck
+        text: 'SA4011'
+      # The standalone gosec scan did not include test files.
+      - linters:
+          - gosec
+        path: _test\.go
+      - linters:
+          - lll
+        path: _test\.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/molecule-man/go-brrr)
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
