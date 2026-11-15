@@ -7,7 +7,7 @@ VERSION ?= $(shell git describe --tags $(git rev-list --tags --max-count=1))
 APP_NAME?=notifier
 SHELL := env APP_NAME=$(APP_NAME) $(SHELL)
 
-GOVERSION:=1.22
+GOVERSION:=1.27
 
 GOTOOLS_IMAGE_TAG?=v0.10.0
 SHELL := env GOTOOLS_IMAGE_TAG=$(GOTOOLS_IMAGE_TAG) $(SHELL)

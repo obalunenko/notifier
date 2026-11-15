@@ -1,8 +1,6 @@
 module github.com/obalunenko/notifier
 
-go 1.24
-
-toolchain go1.24.0
+go 1.27
 
 require (
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
