@@ -27,8 +27,7 @@ func isInvalidToken(err error) bool {
 		return true
 	}
 
-	var apiErr *ta.Error
-	if errors.As(err, &apiErr) {
+	if apiErr, ok := errors.AsType[*ta.Error](err); ok {
 		return apiErr.ErrorCode == http.StatusUnauthorized || apiErr.ErrorCode == http.StatusNotFound
 	}
 
@@ -45,6 +44,12 @@ type telegramNotifier struct {
 
 // NewTelegram returns a new telegram notifier.
 func NewTelegram(token, chatID string) (Notifier, error) {
+	return newTelegram(token, chatID)
+}
+
+// newTelegram returns a new telegram notifier.
+// opts are applied after the default bot options, useful to point the client to a test server.
+func newTelegram(token, chatID string, opts ...telego.BotOption) (Notifier, error) {
 	if token == "" {
 		return nil, ErrEmptyTelegramToken
 	}
@@ -53,11 +58,12 @@ func NewTelegram(token, chatID string) (Notifier, error) {
 		return nil, ErrEmptyTelegramChatID
 	}
 
+	botOpts := append([]telego.BotOption{telego.WithDiscardLogger()}, opts...)
 	// Health check calls getMe to validate the token and caches the bot username for Kind.
-	client, err := telego.NewBot(token,
-		telego.WithDiscardLogger(),
-		telego.WithHealthCheck(context.Background()),
-	)
+	// It must be the last option, so it uses the configured API server.
+	botOpts = append(botOpts, telego.WithHealthCheck(context.Background()))
+
+	client, err := telego.NewBot(token, botOpts...)
 	if err != nil {
 		if isInvalidToken(err) {
 			err = ErrInvalidToken
