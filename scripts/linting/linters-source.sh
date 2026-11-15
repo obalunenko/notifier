@@ -10,6 +10,8 @@ source "${SCRIPTS_DIR}/helpers-source.sh"
 
 function vet() {
   echo "vet project..."
+  # Download modules first: "go: downloading" lines go to stderr and would be reported as vet errors.
+  go mod download
   declare -a vet_errs=$(go vet $(go list ./...) 2>&1 >/dev/null)
   EXIT_CODE=$?
   if [[ ${EXIT_CODE} -ne 0 ]]; then
