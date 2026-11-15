@@ -1,4 +1,4 @@
-.PHONY: help, test-cover, prepare-cover-report, open-cover-report, update-readme-cover, update-readme-doc, test, test-regression, configure, sync-vendor, imports, fmt, format-project, install-tools, vet, lint-full, lint-pipeline, lint-sonar, release, release-local-snapshot, check-releaser, new-version
+.PHONY: help, test-cover, prepare-cover-report, open-cover-report, update-readme-cover, update-readme-doc, test, test-regression, configure, sync-deps, imports, fmt, format-project, install-tools, vet, lint-full, lint-pipeline, lint-sonar, release, release-local-snapshot, check-releaser, new-version
 BIN_DIR=./bin
 
 SHELL := env VERSION=$(VERSION) $(SHELL)
@@ -56,12 +56,12 @@ test:
 ## Run regression tests.
 test-regression: test
 
-## Sync vendor and install needed tools.
-configure: sync-vendor install-tools
+## Sync dependencies and install needed tools.
+configure: sync-deps install-tools
 
-## Sync vendor with go.mod.
-sync-vendor:
-	./scripts/sync-vendor.sh
+## Tidy and verify go.mod dependencies.
+sync-deps:
+	./scripts/sync-deps.sh
 
 ## Fix imports sorting.
 imports:
