@@ -4,7 +4,7 @@ go 1.27
 
 require (
 	github.com/mymmrac/telego v1.13.0
-	github.com/obalunenko/getenv v1.15.0
+	github.com/obalunenko/getenv v1.17.0
 	github.com/stretchr/testify v1.12.1
 )
 
