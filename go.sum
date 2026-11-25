@@ -19,8 +19,8 @@ github.com/molecule-man/go-brrr v1.3.1 h1:EwaJUzRIlp/dFmIpzq4J17CA5Zi5OHo2vOGmu0
 github.com/molecule-man/go-brrr v1.3.1/go.mod h1:7ybW6/7gA3oKY45jOfVNjSJDtrr6ea4tzbsTkjmQDC4=
 github.com/mymmrac/telego v1.13.0 h1:1sz4F5bstBJYjZNPPJykYBT0HHIIKvPLvARZt45swM0=
 github.com/mymmrac/telego v1.13.0/go.mod h1:gsRatcXPP0UBU9gWbKzp21yQWoPHte86AUKrVcikuaw=
-github.com/obalunenko/getenv v1.15.0 h1:TX+GytSOk0xTK0L8VOIo+L6N77BKQ5iMvnsPRzz/bec=
-github.com/obalunenko/getenv v1.15.0/go.mod h1:kXJjGqFmvucspwNk4/hrHi2bG3cEfSEQJPYmWzUK/KQ=
+github.com/obalunenko/getenv v1.17.0 h1:JxVy6tgWFg55RQxni8x2JIi8bIhmddivwX2EQp8oDVs=
+github.com/obalunenko/getenv v1.17.0/go.mod h1:+vDhwKtC+N82yCGDlA0D8ZY8jHYaj6tIJhBDXCpECaM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
